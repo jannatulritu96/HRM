@@ -13,7 +13,7 @@ class CreateTransectionHeadtable extends Migration
      */
     public function up()
     {
-        Schema::create('transaction_head', function (Blueprint $table) {
+         Schema::create('transaction_heads', function (Blueprint $table) {
             $table->increments('id');
             $table->enum('type',['Income','Expense']);
             $table->string('name');

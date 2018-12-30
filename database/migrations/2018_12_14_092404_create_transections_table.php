@@ -13,12 +13,11 @@ class CreateTransectionstable extends Migration
      */
     public function up()
     {
-        Schema::create('transections', function (Blueprint $table) {
-
+        Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('client');
             $table->unsignedInteger('transaction_head_id');
-            $table->foreign('transaction_head_id')->references('id')->on('transaction_head');
+            $table->foreign('transaction_head_id')->references('id')->on('transaction_heads');
             $table->string('transaction_id',10)->unique();
             $table->enum('type',['Income','Expense']);
             $table->text('description');
