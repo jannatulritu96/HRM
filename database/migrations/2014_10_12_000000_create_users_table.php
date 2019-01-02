@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('employee_id',15)->unique();
             $table->unsignedInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('department');
+            $table->foreign('department_id')->references('id')->on('departments');
             $table->unsignedInteger('designation_id');
             $table->foreign('designation_id')->references('id')->on('designations');
             $table->string('name');
