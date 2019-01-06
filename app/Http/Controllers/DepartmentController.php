@@ -12,10 +12,25 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-         $data['title'] = 'Department List';
-        $data['departments'] = Department::paginate(5);
+    public function index(Request $request)
+    {   
+        // dd($request->all());
+        $data['title'] = 'Department List';
+        $departments =new department;
+        $render=[];
+        if(isset($request->status))
+        {
+            $departments=$departments->where('status',$request->status);
+            $render['status']=$request->status;
+        }
+        if(isset($request->name))
+        {
+            $departments=$departments->where('name','like','%'.$request->name.'%');
+            $render['name']=$request->name;
+        }
+        $departments =$departments->paginate(3);
+        $departments =$departments->appends($render);
+        $data['departments'] = $departments;
         return view('admin.department.index',$data);
     }
 
