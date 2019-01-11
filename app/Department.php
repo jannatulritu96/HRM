@@ -12,7 +12,7 @@ class Department extends Model
    }
    
    public function relDesignation()
-   {
-   	return $this->hasMany('App\Designation','designation_id','id');
-   }
+    {
+        return $this->hasMany('App\Designation','department_id','id');
+    }
 }

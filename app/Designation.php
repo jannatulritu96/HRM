@@ -10,10 +10,11 @@ class Designation extends Model
    {
    	return $this->hasMany('App\User','designation_id','id');
    }
+ 
+ public function relDepartment()
+    {
+        return $this->belongsTo('App\Department','department_id','id');
 
-   public function relDepartment()
-   {
-   	return $this->belongsTo('App\Department','designation_id','id');
-   }
+    }
 
 }
