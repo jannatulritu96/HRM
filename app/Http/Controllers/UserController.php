@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
 use App\Department;
+use App\Designation;
+use App\User;
+use Validator;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-     $data['title'] = 'User List';
+        $data['title'] = 'User List';
         $users= new User();
         $users= $users->with(['relDepartment','relDesignation']);
         $render=[];
@@ -54,7 +56,8 @@ class UserController extends Controller
     {
         $data['title'] = 'Create User';
         $data['departments'] = Department::where('status','Active')->pluck('name','id');
-        $data['designations'] = [];
+        $data['designations'] = Designation::where('status','Active')->pluck('name','id');
+
         return view('admin.user.create',$data);
     }
 
@@ -68,16 +71,39 @@ class UserController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'status' => 'required',
-            'department_id' => 'required'
+            'type'=>'required',
+            'department_id'=>'required',
+            'designation_id'=>'required',
+            'contact_number'=>'required',
+            'email'=>'required|unique:users',
+            'password'=>'required|confirmed|min:6',
+            'status'=>'required',
+            'image' => 'mimes:png'
         ]);
         $user = new User();
+        $user->type= $request->type;
+        $user->employee_id= 'EMP'.time();
+        $user->department_id= $request->department_id;
+        $user->designation_id= $request->designation_id;
         $user->name= $request->name;
+        $user->dob= $request->dob;
+        $user->contact_number= $request->contact_number;
+        $user->address= $request->address;
+        $user->email= $request->email;
+        $user->password= bcrypt($request->password);
         $user->status= $request->status;
-        $user->department_id=$request->department_id;
         $user->save();
+
+        if($request->hasFile('image'))
+        {
+            $image= $request->file('image');
+            if($image->getClientOriginalExtension()=='png') {
+                $image->move('user_images/', $user->id . '.' . $image->getClientOriginalExtension());
+            }
+        }
         session()->flash('success','User stored successfully');
-        return redirect()->route('user.index');    }
+        return redirect()->route('user.index');
+    }
 
     /**
      * Display the specified resource.
@@ -87,7 +113,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['title'] = 'User Profile';
+        $data['user']= User::with(['relPayroll','relDepartment','relDesignation'])->where('id',$id)->first();
+//        dd($data);
+        return view( 'admin.user.show',$data);
     }
 
     /**
@@ -98,7 +127,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['title'] = 'Edit User';
+        $data['user'] = User::findOrFail($id);
+        $data['departments'] = Department::where('status','Active')->pluck('name','id');
+        $data['designations'] = Designation::where('department_id',$data['user']->department_id)->where('status','Active')->pluck('name','id');
+
+        return view('admin.user.edit',$data);
     }
 
     /**
@@ -110,7 +144,43 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'type'=>'required',
+            'department_id'=>'required',
+            'designation_id'=>'required',
+            'contact_number'=>'required',
+            'email'=>'required|unique:users,email,'. $id,
+            'status'=>'required',
+            'image' => 'mimes:png'
+        ]);
+        $user = User::findOrfail($id);
+        $user->type= $request->type;
+        $user->employee_id= 'EMP'.time();
+        $user->department_id= $request->department_id;
+        $user->designation_id= $request->designation_id;
+        $user->name= $request->name;
+        $user->dob= $request->dob;
+        $user->contact_number= $request->contact_number;
+        $user->address= $request->address;
+        $user->email= $request->email;
+        if(isset($request->password))
+        {
+            $user->password= bcrypt($request->password);
+        }
+        $user->status= $request->status;
+//        $user->save();
+
+        if($request->hasFile('image'))
+        {
+            $image= $request->file('image');
+            if($image->getClientOriginalExtension()=='png') {
+                $image->move('user_images/', $user->id . '.' . $image->getClientOriginalExtension());
+            }
+        }
+
+        session()->flash('success','User updated successfully');
+        return redirect()->route('user.index');
     }
 
     /**
