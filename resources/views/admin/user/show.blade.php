@@ -34,11 +34,11 @@
                                 <ul class="personal-info">
                                     <li>
                                         <span class="title">Phone:</span>
-                                        <span class="text"><a href="#">{{ $user->contact_number }}</a></span>
+                                        <span class="text">{{ $user->contact_number }}</span>
                                     </li>
                                     <li>
                                         <span class="title">Email:</span>
-                                        <span class="text"><a href="#">{{ $user->email }}</a></span>
+                                        <span class="text">{{ $user->email }}</span>
                                     </li>
                                     <li>
                                         <span class="title">Birthday:</span>
