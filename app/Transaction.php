@@ -8,7 +8,7 @@ class Transaction extends Model
 {
     public function relTransactionHead()
     {
-    	return $this->belongsto('App\TransactionHead','transactionhead_id','id');
+    	return $this->belongsto('App\TransactionHead','transaction_head_id','id');
     }
 
     public function relUser()
