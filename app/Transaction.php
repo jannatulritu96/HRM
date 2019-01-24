@@ -13,6 +13,7 @@ class Transaction extends Model
 
     public function relUser()
     {
-    	return $this->belongsto('App\User','transaction_id','id');
+        return $this->belongsTo('App\User','client','id');
     }
+
 }
