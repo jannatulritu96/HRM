@@ -10,36 +10,21 @@
         </div>
     </div>
     <div class="row" style="margin-bottom: 10px">
-        @php
-                $department_id=null;
-                if(isset($_GET['department_id'])){
-                    $department_id=$_GET['department_id'];
-                }
-                $name=null;
-                if(isset($_GET['name'])){
-                    $name=$_GET['name'];
-                }
-                $status=null;
-                if(isset($_GET['status'])){
-                    $status=$_GET['status'];
-                }
-            @endphp
-        {{ Form::open(['method'=>'get']) }}
-             <div class="col-sm-4">
-            {{ Form::text('name',$name,['class'=>'form-control','placeholder'=>'Designation name']) }}
-            </div>
-            <div class="col-sm-4">
-                {{ Form::select('department_id',$departments,$department_id,['class'=>'form-control','placeholder'=>'Select department']) }}
-            </div>
-            <div class="col-sm-2">
-                {{ Form::select('status',['Active'=>'Active','Inactive'=>'Inactive'],$status,['class'=>'form-control','placeholder'=>'Select status']) }}
-            </div>
-            <div class="col-sm-2">
-                {{ Form::submit('Search',['class'=>'btn btn-warning']) }}
-            </div>
-            {{ Form::close() }}
+        {{ Form::model(request(),['method'=>'get']) }}
+        <div class="col-sm-4">
+            {{ Form::text('name',null,['class'=>'form-control','placeholder'=>'Designation name']) }}
+        </div>
+        <div class="col-sm-4">
+            {{ Form::select('department_id',$departments,null,['class'=>'form-control','placeholder'=>'Select department']) }}
+        </div>
+        <div class="col-sm-2">
+            {{ Form::select('status',['Active'=>'Active','Inactive'=>'Inactive'],null,['class'=>'form-control','placeholder'=>'Select status']) }}
+        </div>
+        <div class="col-sm-2">
+            {{ Form::submit('Search',['class'=>'btn btn-warning']) }}
+        </div>
+        {{ Form::close() }}
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div>
@@ -48,7 +33,7 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Department name</th>
+                        <th>Department Name</th>
                         <th>Status</th>
                         <th class="text-right">Action</th>
                     </tr>
@@ -59,7 +44,7 @@
                         <tr>
                             <td>{{ $designation->id }}</td>
                             <td>{{ $designation->name }}</td>
-                             <td>{{ $designation->relDepartment->name }}</td>
+                            <td>{{ $designation->relDepartment->name }}</td>
                             <td>{{ $designation->status }}</td>
                             <td class="text-right">
                                 <div class="dropdown">
@@ -74,7 +59,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                    {{ $designations->render() }}
+                {{ $designations->links() }}
             </div>
         </div>
     </div>

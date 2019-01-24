@@ -9,44 +9,27 @@
             <a href="{{ route('user.create') }}" class="btn btn-primary rounded"><i class="fa fa-plus"></i> Add New User</a>
         </div>
     </div>
-    <div class="row" style="margin-bottom: 10px">
-        {{ Form::open(['method'=>'get']) }}
 
-        @php
-            $name=null;
-            if(isset($_GET['name'])){
-                $name=$_GET['name'];
-            }
-            $type=null;
-            if(isset($_GET['type'])){
-                $type=$_GET['type'];
-            }
-            $email=null;
-            if(isset($_GET['email'])){
-                $email=$_GET['email'];
-            }
-            $status=null;
-            if(isset($_GET['status'])){
-                $status=$_GET['status'];
-            }
-        @endphp
+    <div class="row" style="margin-bottom: 10px">
+        {{ Form::model(request(),['method'=>'get']) }}
         <div class="col-sm-3">
-            {{ Form::text('name',$name,['class'=>'form-control','placeholder'=>'User name']) }}
+            {{ Form::text('name',null,['class'=>'form-control','placeholder'=>'User name']) }}
         </div>
         <div class="col-sm-3">
-            {{ Form::text('email',$email,['class'=>'form-control','placeholder'=>'Email']) }}
+            {{ Form::text('email',null,['class'=>'form-control','placeholder'=>'Email']) }}
         </div>
         <div class="col-sm-2">
-            {{ Form::select('type',['Admin'=>'Admin','Employee'=>'Employee'],$type,['class'=>'form-control','placeholder'=>'Select type']) }}
+            {{ Form::select('type',['Admin'=>'Admin','Employee'=>'Employee'],null,['class'=>'form-control','placeholder'=>'Select type']) }}
         </div>
         <div class="col-sm-2">
-            {{ Form::select('status',['Active'=>'Active','Inactive'=>'Inactive'],$status,['class'=>'form-control','placeholder'=>'Select status']) }}
+            {{ Form::select('status',['Active'=>'Active','Inactive'=>'Inactive'],null,['class'=>'form-control','placeholder'=>'Select status']) }}
         </div>
         <div class="col-sm-2">
             {{ Form::submit('Search',['class'=>'btn btn-warning']) }}
         </div>
         {{ Form::close() }}
     </div>
+
     <div class="row">
         <div class="col-md-12">
             <div>
