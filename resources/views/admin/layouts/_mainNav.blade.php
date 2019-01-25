@@ -5,6 +5,7 @@
             <li {{-- class="active" --}}>
                 <a href="{{ route('dashboard') }}">Dashboard</a>
             </li>
+            @if(auth()->user()->type=='Admin')
             <li {{-- class="active" --}}>
                 <a href="{{ route('user.index') }}">User</a>
             </li>
@@ -24,6 +25,7 @@
                     <li><a href="{{ route('application_settings') }}"> Application Settings </a></li>
                 </ul>
             </li>
+             @endif
         </ul>
     </div>
 </div>
