@@ -19,8 +19,6 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
-
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -29,30 +27,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
     public function relDepartment()
-   {
-    return $this->belongsTo('App\Department','department_id','id');
-   }
-   
-   public function relDesignation()
-   {
-    return $this->belongsTo('App\Designation','designation_id','id');
-   }
-
-   public function relAttendence()
-   {
-    return $this->hasMany('App\Attendence','user_id','id');
-   }
-
-   public function relTransaction()
     {
-        return $this->hasMany('App\Transaction','transaction_id','id');
+        return $this->belongsTo('App\Department','department_id','id');
     }
-
+    public function relDesignation()
+    {
+        return $this->belongsTo('App\Designation','designation_id','id');
+    }
+    public function relAttendence()
+    {
+        return $this->hasMany('App\Attendence','user_id','id');
+    }
     public function relPayroll()
     {
         return $this->hasOne('App\Payroll','user_id','id');
     }
-
+    public function relTransaction()
+    {
+        return $this->hasMany('App\Transaction','user_id','id');
+    }
 }

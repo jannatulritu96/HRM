@@ -5,7 +5,7 @@
 </div>	
 <div class="form-group">
     <label>Designation Name <span class="text-danger">*</span></label>
-    {{ Form::text('name',null,['class'=>'form-control','required','placeholder'=>'Please enter department name']) }}
+    {{ Form::text('name',null,$designation,['class'=>'form-control','required','placeholder'=>'Please enter department name']) }}
 </div>
 <div class="form-group">
     <label>Status <span class="text-danger">*</span></label>

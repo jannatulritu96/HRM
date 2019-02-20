@@ -37,7 +37,7 @@ Version      : 1.0.3
 27. Task
 28. Project View
 29. Payslip
-30. Attendance
+30. Attendence
 31. Ticket
 32. Client Profile
 33. Inbox
@@ -1204,7 +1204,7 @@ html.menu-opened body {overflow: hidden;}
 .payslip-title {margin-bottom: 20px;text-align: center;text-decoration: underline;text-transform: uppercase;}
 
 /*------------------------------------------------------------------
-[30. Attendance]
+[30. Attendence]
 */
 
 .half-day {width: 15px;}

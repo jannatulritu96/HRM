@@ -14,7 +14,6 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-
             $table->increments('id');
             $table->enum('type',['Admin','Employee']);
             $table->string('employee_id',15)->unique();

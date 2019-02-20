@@ -16,7 +16,6 @@ Route::post('login','LoginController@login')->name('login');
 
 Route::middleware('auth')->group(function (){
     Route::get('dashboard','DashboardController@index')->name('dashboard');
-    Route::resource('user', 'UserController')->only (['show']);
 
       Route::middleware('user-access-control')->group(function () {
         Route::resource('department', 'DepartmentController');
@@ -34,7 +33,15 @@ Route::middleware('auth')->group(function (){
 
         Route::get('application_settings', 'SettingController@application_settings')->name('application_settings');
         Route::post('application_settings', 'SettingController@update_application_settings')->name('application_settings.update');
-    });
+        //Attendence routes
+        Route::get('attendence', 'AttendenceController@index')->name('attendence.index');
+        Route::get('attendence/index', 'AttendenceController@index')->name('attendence.index');
+        Route::get('attendence/create', 'AttendenceController@create')->name('attendence.upload');
+        Route::post('attendence/store', 'AttendenceController@store')->name('attendence.store');
+        Route::get('attendence/{user_id}/{export?}', 'AttendenceController@show')->name('attendence.show');
+
+      });
+    Route::resource('user', 'UserController')->only (['show']);
 
     Route::post('logout',function (){
         auth()->logout();
